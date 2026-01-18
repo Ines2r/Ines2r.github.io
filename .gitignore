@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-public
-resources
-.hugo_build.lock
-=======
 # Hugo build output
 /public/
 /resources/_gen/
@@ -20,4 +15,3 @@ Thumbs.db
 
 # Logs
 *.log
->>>>>>> fadf655d625d0217e80b84e6bbde98351ba04127
