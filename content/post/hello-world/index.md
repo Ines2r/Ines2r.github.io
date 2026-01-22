@@ -18,7 +18,7 @@ weight: 1
 
 # Working Notes
 
-### Exploring AI, Machine Learning, and Graphs — with Limited Resources and Serious Questions
+**Exploring AI, Machine Learning, and Graphs — with Limited Resources and Serious Questions**
 
 ## Why This Blog Exists
 
