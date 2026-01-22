@@ -16,3 +16,7 @@ hasCJKLanguage = false
 
 [pagination]
 pagerSize = 5
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"

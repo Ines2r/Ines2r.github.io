@@ -9,7 +9,11 @@ emoji = ""
 subtitle = "Curious about AI, ML and science"
 
 [sidebar.avatar]
-enabled = false
+enabled = true
+local = true
+src = "images/art_blue.jpg"
+width = 120
+height = 120
 
 [article]
 readingTime = true
