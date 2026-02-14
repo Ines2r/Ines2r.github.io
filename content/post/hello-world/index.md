@@ -7,13 +7,12 @@ image: cover.jpg
 categories:
     - Reflections
 tags:
-    - Scientific Method
     - Artificial Intelligence
     - Machine Learning
     - Graph Theory
     - Security
     - Reproducible Research
-weight: 1
+weight: 10
 ---
 
 # Working Notes

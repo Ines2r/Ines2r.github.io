@@ -11,9 +11,7 @@ subtitle = "Curious about AI, ML and science"
 [sidebar.avatar]
 enabled = true
 local = true
-src = "images/art_blue.jpg"
-width = 120
-height = 120
+src = "images/fox.jpg"
 
 [article]
 readingTime = true
