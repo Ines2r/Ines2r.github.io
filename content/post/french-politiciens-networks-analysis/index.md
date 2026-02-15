@@ -1,6 +1,6 @@
 ---
 title: "Mapping the French National Assembly: A Network Analysis of voting behavior (2012–2024)"
-description: "An analysis of the last three French legislatures using network theory and PCA to visualize the evolution of political polarization among Members of Parliament."
+description: "An analysis of the last three French legislatures to visualize the evolution of political polarization among Members of Parliament."
 slug: networks-analysis
 date: 2026-02-14 00:00:00+0000
 image: Cover.png
@@ -8,9 +8,9 @@ math: true
 categories:
     - Networks_Graphs
 tags:
-    - ACP
+    - PCA
     - Graph Theory
-    - Network Analysis
+    - Networks Analysis
     - Political Networks
 weight: 2
 toc: false
@@ -38,7 +38,7 @@ toc: false
 
 This project uses Graph Theory to analyze voting patterns in the French National Assembly. By treating MPs as nodes and shared votes as edges, we reveal the hidden mathematical structure of political life, moving beyond simple party labels.
 
-**Keywords:** Quantitative political analysis; network graphs; PCA; parliamentary votes; similarity analysis; France
+**Keywords:** Quantitative political analysis; graphs; PCA; parliamentary votes; similarity analysis
 
 ---
 
@@ -94,7 +94,7 @@ To facilitate the interpretation of the spatialization graphs, the table below s
 | ![#bdc3c7](https://img.shields.io/static/v1?label=&message=%20&color=bdc3c7) | **NI** | Non-affiliated members who do not belong to any parliamentary group. | [assemblee-nationale.fr](https://www.assemblee-nationale.fr) |
 
 
-> **Note on Data:** Descriptions are synthesized from the "Manifesto" or "Our Values" sections of the parties' official websites to ensure alignment with their self-defined political identity.
+> **Note:** Descriptions are synthesized from the "Manifesto" or "Our Values" sections of the parties' official websites to ensure alignment with their self-defined political identity.
 ---
 
 
@@ -196,63 +196,7 @@ $$
 
 ### 2.4 Synthesis: Choice of Metric
 
-For this study, **we favor cosine similarity**. It strikes the best balance between **ideological direction** and **statistical robustness**. Unlike Pearson, it avoids over-inflating similarities based on tiny samples. Unlike the Agreement Ratio, it preserves the **granularity** of the Assembly by allowing subtle differences in participation and individual deviations to translate into distinct, interpretable geometric coordinates.
-
-### 2.5 Data Filtering
-
-
-We apply a **thematic classification** based on the title of each ballot vote. Themes include:
-- Ecology & Territories (agriculture, climate, energy, transport)
-- Economy & State (taxation, customs, inflation)
-- Security & International Affairs (police, justice, defense)
-- Solidarity & Social Policy (pensions, social benefits, disability)
-
-This enables **theme-based analyses**.
-
-#### Categorization Methodology
-
-We implemented a **deterministic keyword-matching algorithm**. This process filters the legislative titles provided by the NosDéputés.fr XML API to categorize each vote into one of four strategic domains.
-
-> **Methodological Note:** > While a Large Language Model (LLM) would undoubtedly be more "sophisticated" at interpreting the nuanced context of legislative titles, we decided to stick to a keyword-based approach. It is simple and easily understandable.
-
-The script scans each `titre` (title) tag within the XML response. If a keyword is found, the `scrutin_id` (ballot ID) is mapped to that specific theme using the following logic:
-
-```python
-THEMATIQUES = {
-    "Solidarité & Social": [
-        "pauvreté", "handicap", "retraite", "social", "précarité", "apl", 
-        "famille", "prestations", "rsa", "solidarité", "chômage"
-    ],
-    "Écologie & Territoires": [
-        "écologie", "environnement", "climat", "nucléaire", "énergie", "biodiversité", 
-        "eau", "agriculture", "agricole", "pesticide", "rural", "transport"
-    ],
-    "Économie & État": [
-        "économie", "fiscal", "impôt", "inflation", 
-        "douanes", "entreprises", "croissance"
-    ],
-    "Sécurité & International": [
-        "justice", "sécurité", "police", "prison", "immigration", 
-        "étranger", "asile", "frontière", "armée", "défense", "europe"
-    ]
-}
-```
-
-### 1.4 Dataset Overview: Distribution of Ballots by Theme
-
-The following table summarizes the volume of ballot votes analyzed for each legislature, categorized by their primary thematic focus. These themes serve as the basis for our comparative spatial analysis.
-
-| Theme | 14th Legislature (2012-2017) | 15th Legislature (2017-2022) | 16th Legislature (2022-2024) |
-| :--- | :---: | :---: | :---: |
-| **Solidarity & Social** | 138 | 757 | 335 |
-| **Ecology & Territories** | 73 | 641 | 709 |
-| **Economy & State** | 72 | 157 | 68 |
-| **Security & International** | 26 | 396 | 519 |
-| **Total Analyzed Ballots** | **309** | **1,951** | **1,631** |
-
-> **Note:** The distribution of ballots shown above should not be used to draw direct conclusions about the evolution of parliamentary activity. The classification is based on a simple keyword-based filter, which inevitably misses certain ballots. The primary objective of this filtering process is not exhaustiveness, but relevance: we aim to isolate a selection of ballots that are certain to address the specific theme.
-
-There has been a notable rise in MP activity in recent years: the number of ballots grew from 1,023 during the 14th Legislature to 4,394 in the 15th and 4,029 in the 16th.
+For this study, **we favor cosine similarity**. It strikes the best balance between **ideological direction** and **statistical robustness**. Unlike Pearson, it avoids over-inflating similarities based on tiny samples. Unlike the Agreement Ratio, it preserves the granularity of the Assembly by allowing subtle differences in participation and individual deviations to translate into distinct geometric coordinates.
 
 ---
 
@@ -380,6 +324,61 @@ A reliable PCA could not be generated for the 14th Legislature due to extreme ab
 
 ### 4.4 Thematic Analysis
 
+We apply a **thematic classification** based on the title of each ballot vote. Themes include:
+- Ecology & Territories (agriculture, climate, energy, transport)
+- Economy & State (taxation, customs, inflation)
+- Security & International Affairs (police, justice, defense)
+- Solidarity & Social Policy (pensions, social benefits, disability)
+
+This enables **theme-based analyses**.
+
+#### Categorization Methodology
+
+We implemented a **deterministic keyword-matching algorithm**. This process filters the legislative titles provided by the NosDéputés.fr XML API to categorize each vote into one of four strategic domains.
+
+> **Methodological Note:** > While a Large Language Model (LLM) would undoubtedly be more "sophisticated" at interpreting the nuanced context of legislative titles, we decided to stick to a keyword-based approach. It is simple and easily understandable.
+
+The script scans each `titre` (title) tag within the XML response. If a keyword is found, the `scrutin_id` (ballot ID) is mapped to that specific theme using the following logic:
+
+```python
+THEMATIQUES = {
+    "Solidarité & Social": [
+        "pauvreté", "handicap", "retraite", "social", "précarité", "apl", 
+        "famille", "prestations", "rsa", "solidarité", "chômage"
+    ],
+    "Écologie & Territoires": [
+        "écologie", "environnement", "climat", "nucléaire", "énergie", "biodiversité", 
+        "eau", "agriculture", "agricole", "pesticide", "rural", "transport"
+    ],
+    "Économie & État": [
+        "économie", "fiscal", "impôt", "inflation", 
+        "douanes", "entreprises", "croissance"
+    ],
+    "Sécurité & International": [
+        "justice", "sécurité", "police", "prison", "immigration", 
+        "étranger", "asile", "frontière", "armée", "défense", "europe"
+    ]
+}
+```
+
+#### Dataset Overview: Distribution of Ballots by Theme
+
+The following table summarizes the volume of ballot votes analyzed for each legislature, categorized by their primary thematic focus. These themes serve as the basis for our comparative spatial analysis.
+
+| Theme | 14th Legislature (2012-2017) | 15th Legislature (2017-2022) | 16th Legislature (2022-2024) |
+| :--- | :---: | :---: | :---: |
+| **Solidarity & Social** | 138 | 757 | 335 |
+| **Ecology & Territories** | 73 | 641 | 709 |
+| **Economy & State** | 72 | 157 | 68 |
+| **Security & International** | 26 | 396 | 519 |
+| **Total Analyzed Ballots** | **309** | **1,951** | **1,631** |
+
+> **Note:** The distribution of ballots shown above should not be used to draw direct conclusions about the evolution of parliamentary activity. The classification is based on a simple keyword-based filter, which inevitably misses certain ballots. The primary objective of this filtering process is not exhaustiveness, but relevance: we aim to isolate a selection of ballots that are certain to address the specific theme.
+
+There has been a notable rise in MP activity in recent years: the number of ballots grew from 1,023 during the 14th Legislature to 4,394 in the 15th and 4,029 in the 16th.
+
+#### PCA by Theme
+
 Beyond the global PCA, we repeat the analysis for each thematic domain. For example, for *“Solidarity & Social”*:
 
 1. Filter $\mathbf{M}$ to retain only ballot votes labeled “solidarity” or "social"
@@ -399,7 +398,7 @@ Not all themes yield insightful visualizations; those with higher explained vari
 
 - 16th Legislature - The LFI vs. LR Cleavage: The PCA identifies a clear opposition between LFI and LR. This represents the classic "Social vs. Liberal" divide regarding welfare, labor laws, and state intervention.
 
-- In the 16th Legislature's social PCA, the RN often drifts toward the center of the PC2 axis. This suggests a **hybrid voting strategy** supporting certain social measures while remaining distinct from the **redistributive models** proposed by the NUPES.
+- Regarding social issues, the RN exhibits a significant shift toward LFI's positions, creating a shared oppositional front against the LREM-LR nexus. This alignment highlights a clear divide between interventionist model and the liberal framework favored by the presidential majority and the traditional right.
 
 - The explained variance of the first principal component (PC1) serves as a proxy for how "structured" or predictable a political cleavage is:
     - 15th Legislature (PC1 ≈ 20%): Social issues were relatively fluid, with more heterogeneous voting patterns across the chamber.
@@ -485,35 +484,18 @@ The full source code is available in the GitHub repository: [Networks-Analysis](
 
 ---
 
-## References
+## References & Data Sources
 
-Émond, V., & Holovatch, Y. (2014). Open data from NosDéputés.fr: A resource for computational political analysis. *Journal of Open Government Data*, 3(2), 45-62.
-[NosDéputés API](https://www.nosdeputes.fr/api/)
+* **NosDéputés.fr API** [https://www.nosdeputes.fr/api/](https://www.nosdeputes.fr/api/)  
+  *Provides programmatic access to parliamentary activities and metadata.*
 
-[Asssemblée Nationale](https://data.assemblee-nationale.fr/)
+* **Assemblée Nationale Open Data Portal** [https://data.assemblee-nationale.fr/](https://data.assemblee-nationale.fr/)  
+  *Official repository for voting records, law proposals, and legislative history.*
 
 ---
-
 ## Appendices
 
-### Appendix A: Detailed Python Codes (Execution)
-
-Full implementations are available in the GitHub repository: [Networks-Analysis](https://github.com/Ines2r/Networks-Analysis)
-
-Global pipeline execution:
-```bash
-cd /Users/inesderosnay/Desktop/politics_graphs
-python -m src.main
-```
-
-Generates:
-- Network graphs (PNG): Output/{years}/network_cosine.png
-- Global PCA graphs: Output/{years}/pca_Global.png
-- Thematic PCA graphs: Output/{years}/pca_*.png
-- Group distributions: Output/{years}/distribution.png
-- Text reports (stdout): Pivots, pillars, leaders
-
-### Appendix B: Intra-Group Analysis
+### Appendix A: Intra-Group Analysis
 
 For each political group $P$, we compute two distinct metrics:
 
@@ -570,7 +552,7 @@ Artificial Hubs: Is an MP a "Hub" because they lead others, or simply because th
 
 In short, our graph may be mapping legislative discipline rather than political influence. While Mathilde Panot proves that one person can be both a media leader and a legislative hub, for most parties, the "real" power likely lies outside the mathematical center of our clusters.
 
-### Appendix C: Architecture and Implementation of Data Retrieval
+### Appendix B: Architecture and Implementation of Data Retrieval
 
 ### 1 Data Source and API
 
@@ -607,12 +589,5 @@ pivot_votes = df.pivot_table(
   values='vote_val'
 )
 ```
-
-Observed dimensions:
-- 14th legislature: ~635 MPs × ~1, 023 ballot votes
-- 15th legislature: ~648 MPs × ~4, 394 ballot votes
-- 16th legislature: ~605 MPs × ~4, 029 ballot votes
-
-We have more than 577 MPs because of resignations and replacements during the legislature.
 
 ---
