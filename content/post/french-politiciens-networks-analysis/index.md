@@ -17,57 +17,48 @@ toc: false
 ---
 
 <style>
-  .article-page .main-article {
-    width: 95% !important;
-    max-width: 1000px !important; 
-    margin: 0 auto !important;
-    float: none !important;
-  }
-
-  .article-content img:not(table img), 
-  .article-content canvas, 
-  .article-content svg,
-  .article-content iframe {
-    max-width: 100% !important;
-    height: auto !important;
-    display: block;
-    margin: 1em auto;
-  }
-
+/* 2. LE TABLEAU (Général) */
   .article-content table {
-    display: block;
     width: 100% !important;
-    overflow-x: auto;
+    display: table !important;
     border-collapse: collapse;
-    margin-bottom: 1.5em;
+    margin-bottom: 2em;
   }
 
+  /* Par défaut, on laisse les colonnes s'ajuster (pour le tableau des couleurs) */
+  .article-content td {
+    vertical-align: top !important; 
+    padding: 10px !important;
+    border-bottom: 1px solid #eee;
+  }
+
+  /* 3. EXCEPTION POUR LES GRAPHES (Législatures) */
+  /* Si le tableau a 3 colonnes, on force les largeurs égales pour vos graphes */
+  .article-content table tr th:first-child:nth-last-child(3),
+  .article-content table tr th:first-child:nth-last-child(3) ~ th,
+  .article-content table tr td:first-child:nth-last-child(3),
+  .article-content table tr td:first-child:nth-last-child(3) ~ td {
+    width: 33.33% !important;
+  }
+
+  /* 4. GESTION INTELLIGENTE DES IMAGES */
   .article-content table img {
-    max-width: 280px !important;
     height: auto !important;
+    display: block;
+  }
+
+  /* Si l'image est un "badge" de couleur (Shields.io), on la garde petite */
+  .article-content table img[src*="shields.io"] {
+    width: 90px !important; /* Taille fixe pour vos carrés de couleur */
     display: inline-block;
   }
 
-  @media screen and (max-width: 600px) {
-    .article-content table img {
-      max-width: 180px !important;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .main-container {
-      grid-template-columns: 220px 1fr !important; 
-      gap: 40px !important;
-      max-width: 1400px !important;
-      margin: 0 auto !important;
-    }
-
-    .article-page .main-article {
-      max-width: 1100px !important; 
-    }
+  /* Si c'est un graphique (pas un badge), il prend toute la place de sa colonne */
+  .article-content table img:not([src*="shields.io"]) {
+    width: 100% !important;
+    max-width: none !important;
   }
 </style>
-
 ---
 
 # Networks-Analysis
@@ -116,18 +107,18 @@ To facilitate the interpretation of the spatialization graphs, the table below s
 
 | Color | Party/Group | Brief Description (Official Stance) | Source |
 | :--- | :--- | :--- | :--- |
-| ![#e74c3c](https://img.shields.io/static/v1?label=&message=%20&color=e74c3c) | **LFI / LFI-NUPES** | Focuses on ecological planning, wealth redistribution, and a constitutional shift to a 6th Republic. | [lafranceinsoumise.fr](https://lafranceinsoumise.fr) |
-| ![#2ecc71](https://img.shields.io/static/v1?label=&message=%20&color=2ecc71) | **ECOLO** | Advocates for environmental sustainability, social-ecology, and biodiversity protection. | [lesecologistes.fr](https://lesecologistes.fr) |
-| ![#e84393](https://img.shields.io/static/v1?label=&message=%20&color=e84393) | **SRC / SER / SOC** | Social-democratic model, defense of public services, and labor rights (Historical Socialist groups). | [parti-socialiste.fr](https://parti-socialiste.fr) |
-| ![#c0392b](https://img.shields.io/static/v1?label=&message=%20&color=c0392b) | **GDR** | Defense of the working class, social justice, and opposition to liberal economic policies. | [pcf.fr](https://pcf.fr) |
-| ![#f1c40f](https://img.shields.io/static/v1?label=&message=%20&color=f1c40f) | **REN / LREM** | Supports economic competitiveness, full employment policies, and European integration. | [parti-renaissance.fr](https://parti-renaissance.fr) |
-| ![#e67e22](https://img.shields.io/static/v1?label=&message=%20&color=e67e22) | **DEM / RRDP** | Centrist approach, institutional balance, and education (includes center-left Radicals). | [mouvementdemocrate.fr](https://www.mouvementdemocrate.fr) |
-| ![#8e44ad](https://img.shields.io/static/v1?label=&message=%20&color=8e44ad) | **HOR** | Focuses on long-term national stability, security, and supporting the presidential majority. | [horizonsleparti.fr](https://horizonsleparti.fr) |
-| ![#3498db](https://img.shields.io/static/v1?label=&message=%20&color=3498db) | **UMP / LR** | Advocates for fiscal discipline, restoration of state authority, and economic liberalism. | [republicains.fr](https://republicains.fr) |
-| ![#2564a4](https://img.shields.io/static/v1?label=&message=%20&color=2564a4) | **RN** | Prioritizes national sovereignty, immigration control, and national priority policies. | [rassemblementnational.fr](https://rassemblementnational.fr) |
-| ![#d35400](https://img.shields.io/static/v1?label=&message=%20&color=d35400) | **UDI / UAI** | Liberal-humanist and pro-European project centered on a social-market economy. | [parti-udi.fr](https://parti-udi.fr) |
-| ![#95a5a6](https://img.shields.io/static/v1?label=&message=%20&color=95a5a6) | **LIOT** | An independent group focused on territorial interests, decentralization, and local governance. | [groupe-liot.fr](https://groupe-liot.fr) |
-| ![#bdc3c7](https://img.shields.io/static/v1?label=&message=%20&color=bdc3c7) | **NI** | Non-affiliated members who do not belong to any parliamentary group. | [assemblee-nationale.fr](https://www.assemblee-nationale.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=e74c3c" style="width:20px !important; height:20px !important; display:inline;"> | **LFI / LFI-NUPES** | Focuses on ecological planning, wealth redistribution, and a constitutional shift to a 6th Republic. | [lafranceinsoumise.fr](https://lafranceinsoumise.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=2ecc71" style="width:20px !important; height:20px !important; display:inline;"> | **ECOLO** | Advocates for environmental sustainability, social-ecology, and biodiversity protection. | [lesecologistes.fr](https://lesecologistes.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=e84393" style="width:20px !important; height:20px !important; display:inline;"> | **SRC / SER / SOC** | Social-democratic model, defense of public services, and labor rights (Historical Socialist groups). | [parti-socialiste.fr](https://parti-socialiste.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=c0392b" style="width:20px !important; height:20px !important; display:inline;"> | **GDR** | Defense of the working class, social justice, and opposition to liberal economic policies. | [pcf.fr](https://pcf.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=f1c40f" style="width:20px !important; height:20px !important; display:inline;"> | **REN / LREM** | Supports economic competitiveness, full employment policies, and European integration. | [parti-renaissance.fr](https://parti-renaissance.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=e67e22" style="width:20px !important; height:20px !important; display:inline;"> | **DEM / RRDP** | Centrist approach, institutional balance, and education (includes center-left Radicals). | [mouvementdemocrate.fr](https://www.mouvementdemocrate.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=8e44ad" style="width:20px !important; height:20px !important; display:inline;"> | **HOR** | Focuses on long-term national stability, security, and supporting the presidential majority. | [horizonsleparti.fr](https://horizonsleparti.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=3498db" style="width:20px !important; height:20px !important; display:inline;"> | **UMP / LR** | Advocates for fiscal discipline, restoration of state authority, and economic liberalism. | [republicains.fr](https://republicains.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=2564a4" style="width:20px !important; height:20px !important; display:inline;"> | **RN** | Prioritizes national sovereignty, immigration control, and national priority policies. | [rassemblementnational.fr](https://rassemblementnational.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=d35400" style="width:20px !important; height:20px !important; display:inline;"> | **UDI / UAI** | Liberal-humanist and pro-European project centered on a social-market economy. | [parti-udi.fr](https://parti-udi.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=95a5a6" style="width:20px !important; height:20px !important; display:inline;"> | **LIOT** | An independent group focused on territorial interests, decentralization, and local governance. | [groupe-liot.fr](https://groupe-liot.fr) |
+| <img src="https://img.shields.io/static/v1?label=&message=%20&color=bdc3c7" style="width:20px !important; height:20px !important; display:inline;"> | **NI** | Non-affiliated members who do not belong to any parliamentary group. | [assemblee-nationale.fr](https://www.assemblee-nationale.fr) |
 
 
 > **Note:** Descriptions are synthesized from the "Manifesto" or "Our Values" sections of the parties' official websites to ensure alignment with their self-defined political identity.

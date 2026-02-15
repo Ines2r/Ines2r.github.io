@@ -16,56 +16,47 @@ weight: 10
 toc: false
 ---
 
-
 <style>
-  .article-page .main-article {
-    width: 95% !important;
-    max-width: 1000px !important; 
-    margin: 0 auto !important;
-    float: none !important;
-  }
-
-  .article-content img:not(table img), 
-  .article-content canvas, 
-  .article-content svg,
-  .article-content iframe {
-    max-width: 100% !important;
-    height: auto !important;
-    display: block;
-    margin: 1em auto;
-  }
-
+/* 2. LE TABLEAU (Général) */
   .article-content table {
-    display: block;
     width: 100% !important;
-    overflow-x: auto;
+    display: table !important;
     border-collapse: collapse;
-    margin-bottom: 1.5em;
+    margin-bottom: 2em;
   }
 
+  /* Par défaut, on laisse les colonnes s'ajuster (pour le tableau des couleurs) */
+  .article-content td {
+    vertical-align: top !important; 
+    padding: 10px !important;
+    border-bottom: 1px solid #eee;
+  }
+
+  /* 3. EXCEPTION POUR LES GRAPHES (Législatures) */
+  /* Si le tableau a 3 colonnes, on force les largeurs égales pour vos graphes */
+  .article-content table tr th:first-child:nth-last-child(3),
+  .article-content table tr th:first-child:nth-last-child(3) ~ th,
+  .article-content table tr td:first-child:nth-last-child(3),
+  .article-content table tr td:first-child:nth-last-child(3) ~ td {
+    width: 33.33% !important;
+  }
+
+  /* 4. GESTION INTELLIGENTE DES IMAGES */
   .article-content table img {
-    max-width: 280px !important;
     height: auto !important;
+    display: block;
+  }
+
+  /* Si l'image est un "badge" de couleur (Shields.io), on la garde petite */
+  .article-content table img[src*="shields.io"] {
+    width: 90px !important; /* Taille fixe pour vos carrés de couleur */
     display: inline-block;
   }
 
-  @media screen and (max-width: 600px) {
-    .article-content table img {
-      max-width: 180px !important;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .main-container {
-      grid-template-columns: 220px 1fr !important; 
-      gap: 40px !important;
-      max-width: 1400px !important;
-      margin: 0 auto !important;
-    }
-
-    .article-page .main-article {
-      max-width: 1100px !important; 
-    }
+  /* Si c'est un graphique (pas un badge), il prend toute la place de sa colonne */
+  .article-content table img:not([src*="shields.io"]) {
+    width: 100% !important;
+    max-width: none !important;
   }
 </style>
 
